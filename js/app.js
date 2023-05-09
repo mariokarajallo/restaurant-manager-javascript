@@ -31,7 +31,15 @@ function guardarCliente() {
         alerta.remove();
       }, 3000);
     }
-  } else {
-    console.log("campos validados");
+
+    return;
   }
+
+  //guardamos los datos del formulario en nuestro arrelo de pedido
+  cliente = { ...cliente, mesa, hora };
+
+  //cerrar modal
+  const modalFormulario = document.querySelector("#formulario");
+  const modalBootstrap = bootstrap.Modal.getInstance(modalFormulario);
+  modalBootstrap.hide();
 }
