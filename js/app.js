@@ -45,9 +45,21 @@ function guardarCliente() {
 
   // mostrar las secciones
   mostrarSecciones();
+
+  //obtener datos de la API con json-server
+  obteneMenu();
 }
 
 function mostrarSecciones() {
   const seccionesOcultas = document.querySelectorAll(".d-none");
   seccionesOcultas.forEach((seccion) => seccion.classList.remove("d-none"));
+}
+
+function obteneMenu() {
+  const url = "http://localhost:4000/platillos";
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((result) => mostrarMenu(result))
+    .catch((error) => console.log(error));
 }
