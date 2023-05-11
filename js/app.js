@@ -63,3 +63,20 @@ function obteneMenu() {
     .then((result) => mostrarMenu(result))
     .catch((error) => console.log(error));
 }
+
+function mostrarMenu(menues) {
+  const contenido = document.querySelector("#platillos .contenido");
+
+  menues.forEach((menu) => {
+    const row = document.createElement("DIV");
+    row.classList.add("row");
+
+    const nombre = document.createElement("DIV");
+    nombre.classList.add("col-md-4");
+    nombre.textContent = menu.nombre;
+
+    row.appendChild(nombre);
+
+    contenido.appendChild(row);
+  });
+}
