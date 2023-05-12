@@ -89,9 +89,21 @@ function mostrarMenu(menues) {
     categoria.classList.add("col-md-3");
     categoria.textContent = categorias[menu.categoria];
 
+    const inputCantidad = document.createElement("INPUT");
+    inputCantidad.type = "number";
+    inputCantidad.min = 0;
+    inputCantidad.id = `producto-${menu.id}`;
+    inputCantidad.value = 0;
+    inputCantidad.classList.add("form-control");
+
+    const agregarCantidad = document.createElement("DIV");
+    agregarCantidad.classList.add("col-md-2");
+    agregarCantidad.appendChild(inputCantidad);
+
     row.appendChild(nombre);
     row.appendChild(precio);
     row.appendChild(categoria);
+    row.appendChild(agregarCantidad);
 
     contenido.appendChild(row);
   });
