@@ -113,11 +113,33 @@ function mostrarMenu(menues) {
   });
 }
 
-function agregarMenu(menu) {
-  // revisar que la cantidad sea mayor a 0
-  if (menu.cantidad > 0) {
-    console.log("cantidad es mayor a 0");
+function agregarMenu(plato) {
+  //extraer el pedido actual, genera una copia nueva sin afectar al original
+  const { pedido } = cliente;
+
+  // revisar que la cantidad al agregar un plato sea mayor a 0
+  if (plato.cantidad > 0) {
+    // si el plato ya existe dentro del array pedido, y queremos agregar mas cantidad entonces preguntamos si ya existia anteriormente
+    // el metodo some nos devuelve true o false
+    if (pedido.some((platoArrayPedido) => platoArrayPedido.id === plato.id)) {
+      // el metodo .map crea un nuevo array para poder recorrer cada elemento del array pedido
+      const pedidoCantidadActualizado = pedido.map((platoArrayPedido) => {
+        // si la comida ya existe, actualizar la cantidad
+        if (platoArrayPedido.id === plato.id) {
+          platoArrayPedido.cantidad = plato.cantidad;
+        }
+        return platoArrayPedido;
+      });
+
+      // se asigna el nuevo array con cantidades actualizadas al array original de pedido
+      cliente.pedido = [...pedidoCantidadActualizado];
+    } else {
+      // si al agregar la cantidad de un plato, esta cantidad es 0, osea no existe en el array pedido el plato, entonces se agrega al array original de pedido
+      cliente.pedido = [...pedido, plato];
+    }
   } else {
     console.log("cantidad es menor a 0");
   }
+
+  console.log(cliente.pedido);
 }
