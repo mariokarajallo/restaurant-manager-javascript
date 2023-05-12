@@ -95,6 +95,10 @@ function mostrarMenu(menues) {
     inputCantidad.id = `producto-${menu.id}`;
     inputCantidad.value = 0;
     inputCantidad.classList.add("form-control");
+    inputCantidad.onchange = function () {
+      const cantidad = parseInt(inputCantidad.value);
+      agregarMenu({ ...menu, cantidad });
+    };
 
     const agregarCantidad = document.createElement("DIV");
     agregarCantidad.classList.add("col-md-2");
@@ -107,4 +111,8 @@ function mostrarMenu(menues) {
 
     contenido.appendChild(row);
   });
+}
+
+function agregarMenu(menu) {
+  console.log(menu);
 }
