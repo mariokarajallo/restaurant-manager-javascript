@@ -114,5 +114,10 @@ function mostrarMenu(menues) {
 }
 
 function agregarMenu(menu) {
-  console.log(menu);
+  // revisar que la cantidad sea mayor a 0
+  if (menu.cantidad > 0) {
+    console.log("cantidad es mayor a 0");
+  } else {
+    console.log("cantidad es menor a 0");
+  }
 }
