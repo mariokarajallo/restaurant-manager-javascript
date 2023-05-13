@@ -138,7 +138,12 @@ function agregarMenu(plato) {
       cliente.pedido = [...pedido, plato];
     }
   } else {
-    console.log("cantidad es menor a 0");
+    //eliminar elementos cuando la cantidad es 0
+    const pedidoEliminado = pedido.filter(
+      (platoArrayIterador) => platoArrayIterador.id !== plato.id
+    );
+
+    cliente.pedido = [...pedidoEliminado];
   }
 
   console.log(cliente.pedido);
