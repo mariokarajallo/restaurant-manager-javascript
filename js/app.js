@@ -158,7 +158,7 @@ function actualizarResumen() {
   const contenido = document.querySelector("#resumen .contenido");
 
   const resumen = document.createElement("DIV");
-  resumen.classList.add("col-md-6");
+  resumen.classList.add("col-md-6", "card", "py-5", "px-3", "shadow");
 
   const propina = document.createElement("DIV");
   propina.classList.add("col-md-6");
@@ -185,9 +185,16 @@ function actualizarResumen() {
   mesa.appendChild(mesaSpan);
   hora.appendChild(horaSpan);
 
+  //titulo de la seccion
+  const heading = document.createElement("H3");
+  heading.textContent = "Platos Consumidos";
+  heading.classList.add("my-4", "text-center");
+
   // agrega al resumen
   resumen.appendChild(mesa);
   resumen.appendChild(hora);
+  resumen.appendChild(heading);
+
   //agrega elemento a contenido
   contenido.appendChild(resumen);
 }
