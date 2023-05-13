@@ -190,10 +190,58 @@ function actualizarResumen() {
   heading.textContent = "Platos Consumidos";
   heading.classList.add("my-4", "text-center");
 
+  //iterar sobre el array de pedidos
+  const grupo = document.createElement("UL");
+  grupo.classList.add("list-group");
+
+  const { pedido } = cliente;
+  pedido.forEach((plato) => {
+    const { nombre, cantidad, precio, id } = plato;
+
+    const lista = document.createElement("LI");
+    lista.classList.add("list-group-item");
+
+    // nombre del plato
+    const nombreEl = document.createElement("H4");
+    nombreEl.classList.add("my-4");
+    nombreEl.textContent = nombre;
+
+    // contenedor de cantidad
+    const cantidadEl = document.createElement("P");
+    cantidadEl.classList.add("fw-bold");
+    cantidadEl.textContent = "Cantidad: ";
+
+    const cantidadSpan = document.createElement("SPAN");
+    cantidadSpan.classList.add("fw-normal");
+    cantidadSpan.textContent = cantidad;
+
+    // contenedor de cantidad
+    const precioEl = document.createElement("P");
+    precioEl.classList.add("fw-bold");
+    precioEl.textContent = "Precio: ";
+
+    const precioSpan = document.createElement("SPAN");
+    precioSpan.classList.add("fw-normal");
+    precioSpan.textContent = `$${precio}`;
+
+    //agrega elemento a su contenedor
+    cantidadEl.appendChild(cantidadSpan);
+    precioEl.appendChild(precioSpan);
+
+    //agrega elementos a la lista
+    lista.appendChild(nombreEl);
+    lista.appendChild(cantidadEl);
+    lista.appendChild(precioEl);
+
+    //agrega la lista a un grupo de lista
+    grupo.appendChild(lista);
+  });
+
   // agrega al resumen
   resumen.appendChild(mesa);
   resumen.appendChild(hora);
   resumen.appendChild(heading);
+  resumen.appendChild(grupo);
 
   //agrega elemento a contenido
   contenido.appendChild(resumen);
