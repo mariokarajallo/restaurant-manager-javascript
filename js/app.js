@@ -146,5 +146,43 @@ function agregarMenu(plato) {
     cliente.pedido = [...pedidoEliminado];
   }
 
-  console.log(cliente.pedido);
+  //mostrar el resumen del pedido
+  actualizarResumen();
+}
+
+function actualizarResumen() {
+  //selecionar el elemento donde inyectaremos nuevo contenido
+  const contenido = document.querySelector("#resumen .contenido");
+
+  const resumen = document.createElement("DIV");
+  resumen.classList.add("col-md-6");
+
+  const propina = document.createElement("DIV");
+  propina.classList.add("col-md-6");
+
+  //elemento MESA
+  const mesa = document.createElement("P");
+  mesa.classList.add("fw-bold");
+  mesa.textContent = "Mesa: ";
+
+  const mesaSpan = document.createElement("SPAN");
+  mesaSpan.classList.add("fw-normal");
+  mesaSpan.textContent = cliente.mesa;
+
+  //elemento hora
+  const hora = document.createElement("P");
+  hora.classList.add("fw-bold");
+  hora.textContent = "Hora: ";
+
+  const horaSpan = document.createElement("SPAN");
+  horaSpan.classList.add("fw-normal");
+  horaSpan.textContent = cliente.hora;
+
+  //agregar elemento a su elemento padre
+  mesa.appendChild(mesaSpan);
+  hora.appendChild(horaSpan);
+
+  //agrega elemento a contenido
+  contenido.appendChild(mesa);
+  contenido.appendChild(hora);
 }
