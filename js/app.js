@@ -146,6 +146,9 @@ function agregarMenu(plato) {
     cliente.pedido = [...pedidoEliminado];
   }
 
+  //limpiar el codigo html previo
+  limpiarHTML();
+
   //mostrar el resumen del pedido
   actualizarResumen();
 }
@@ -182,7 +185,16 @@ function actualizarResumen() {
   mesa.appendChild(mesaSpan);
   hora.appendChild(horaSpan);
 
+  // agrega al resumen
+  resumen.appendChild(mesa);
+  resumen.appendChild(hora);
   //agrega elemento a contenido
-  contenido.appendChild(mesa);
-  contenido.appendChild(hora);
+  contenido.appendChild(resumen);
+}
+
+function limpiarHTML() {
+  const contenido = document.querySelector("#resumen .contenido");
+  while (contenido.firstChild) {
+    contenido.removeChild(contenido.firstChild);
+  }
 }
