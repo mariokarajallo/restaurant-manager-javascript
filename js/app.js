@@ -149,8 +149,13 @@ function agregarMenu(plato) {
   //limpiar el codigo html previo
   limpiarHTML();
 
-  //mostrar el resumen del pedido
-  actualizarResumen();
+  if (cliente.pedido.length) {
+    //mostrar el resumen del pedido si tenemos elementos en el array de pedido
+    actualizarResumen();
+  } else {
+    // si no tiene ningun elemento nuestro array de pedido
+    mensajePedidoVacio();
+  }
 }
 
 function actualizarResumen() {
@@ -289,6 +294,25 @@ function eliminarPedido(id) {
   //limpiar el codigo html previo
   limpiarHTML();
 
-  //mostrar el resumen del pedido
-  actualizarResumen();
+  if (cliente.pedido.length) {
+    //mostrar el resumen del pedido si tenemos elementos en el array de pedido
+    actualizarResumen();
+  } else {
+    // si no tiene ningun elemento nuestro array de pedido
+    mensajePedidoVacio();
+  }
+
+  // el producto se elimina entonces regresamos a 0 los inputs del formulario de menu
+  const inputIdEliminar = document.querySelector(`#producto-${id}`);
+  inputIdEliminar.value = 0;
+}
+
+function mensajePedidoVacio() {
+  const contenido = document.querySelector("#resumen .contenido");
+
+  const mensaje = document.createElement("P");
+  mensaje.classList.add("text-center");
+  mensaje.textContent = "Añade los elementos del pedido";
+
+  contenido.appendChild(mensaje);
 }
