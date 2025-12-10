@@ -62,7 +62,7 @@ function mostrarSecciones() {
 }
 
 function obteneMenu() {
-  const url = "http://localhost:4000/platillos";
+  const url = "http://localhost:3000/platillos";
 
   fetch(url)
     .then((response) => response.json())
