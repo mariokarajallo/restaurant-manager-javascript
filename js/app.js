@@ -74,42 +74,52 @@ function mostrarMenu(menues) {
   const contenido = document.querySelector("#platillos .contenido");
 
   menues.forEach((menu) => {
-    const row = document.createElement("DIV");
-    row.classList.add("row", "py-2", "border-top");
+    const { nombre, precio, categoria, id } = menu;
 
-    const nombre = document.createElement("DIV");
-    nombre.classList.add("col-md-4");
-    nombre.textContent = menu.nombre;
+    const div = document.createElement("DIV");
+    div.classList.add("col-md-4", "col-lg-3", "mb-4");
 
-    const precio = document.createElement("DIV");
-    precio.classList.add("col-md-3", "fw-bold");
-    precio.textContent = `$${menu.precio}`;
+    const card = document.createElement("DIV");
+    card.classList.add("card", "h-100");
 
-    const categoria = document.createElement("DIV");
-    categoria.classList.add("col-md-3");
-    categoria.textContent = categorias[menu.categoria];
+    const cardBody = document.createElement("DIV");
+    cardBody.classList.add("card-body", "d-flex", "flex-column");
+
+    const nombrePlatillo = document.createElement("H3");
+    nombrePlatillo.classList.add("card-title");
+    nombrePlatillo.textContent = nombre;
+
+    const precioPlatillo = document.createElement("P");
+    precioPlatillo.classList.add("card-text", "fw-bold");
+    precioPlatillo.textContent = `$${precio}`;
+
+    const categoriaPlatillo = document.createElement("P");
+    categoriaPlatillo.classList.add("card-text");
+    categoriaPlatillo.textContent = categorias[categoria];
 
     const inputCantidad = document.createElement("INPUT");
     inputCantidad.type = "number";
     inputCantidad.min = 0;
-    inputCantidad.id = `producto-${menu.id}`;
     inputCantidad.value = 0;
-    inputCantidad.classList.add("form-control");
+    inputCantidad.id = `producto-${id}`;
+    inputCantidad.classList.add("form-control", "mt-auto");
+
+    // Función que detecta la cantidad y la agrega al arreglo
     inputCantidad.onchange = function () {
       const cantidad = parseInt(inputCantidad.value);
       agregarMenu({ ...menu, cantidad });
     };
 
-    const agregarCantidad = document.createElement("DIV");
-    agregarCantidad.classList.add("col-md-2");
-    agregarCantidad.appendChild(inputCantidad);
+    // Agregar al HTML
+    cardBody.appendChild(nombrePlatillo);
+    cardBody.appendChild(precioPlatillo);
+    cardBody.appendChild(categoriaPlatillo);
+    cardBody.appendChild(inputCantidad);
 
-    row.appendChild(nombre);
-    row.appendChild(precio);
-    row.appendChild(categoria);
-    row.appendChild(agregarCantidad);
+    card.appendChild(cardBody);
+    div.appendChild(card);
 
-    contenido.appendChild(row);
+    contenido.appendChild(div);
   });
 }
 
@@ -165,34 +175,17 @@ function actualizarResumen() {
   const resumen = document.createElement("DIV");
   resumen.classList.add("col-md-6", "card", "py-4", "px-3", "shadow");
 
-  //elemento MESA
-  const mesa = document.createElement("P");
-  mesa.classList.add("fw-bold");
-  mesa.textContent = "Mesa: ";
-
-  const mesaSpan = document.createElement("SPAN");
-  mesaSpan.classList.add("fw-normal");
-  mesaSpan.textContent = cliente.mesa;
-
-  //elemento hora
-  const hora = document.createElement("P");
-  hora.classList.add("fw-bold");
-  hora.textContent = "Hora: ";
-
-  const horaSpan = document.createElement("SPAN");
-  horaSpan.classList.add("fw-normal");
-  horaSpan.textContent = cliente.hora;
-
-  //agregar elemento a su elemento padre
-  mesa.appendChild(mesaSpan);
-  hora.appendChild(horaSpan);
-
-  //titulo de la seccion
+  // Título de la sección
   const heading = document.createElement("H3");
   heading.textContent = "Platos Consumidos";
   heading.classList.add("my-4", "text-center");
 
-  //iterar sobre el array de pedidos
+  // Mostrar Mesa y Hora en una sola linea
+  const mesaHora = document.createElement("P");
+  mesaHora.classList.add("text-center", "fw-bold", "fs-5");
+  mesaHora.textContent = `Mesa: ${cliente.mesa} - Hora: ${cliente.hora}`;
+
+  // Iterar sobre el array de pedidos
   const grupo = document.createElement("UL");
   grupo.classList.add("list-group");
 
@@ -201,70 +194,65 @@ function actualizarResumen() {
     const { nombre, cantidad, precio, id } = plato;
 
     const lista = document.createElement("LI");
-    lista.classList.add("list-group-item");
+    lista.classList.add(
+      "list-group-item",
+      "d-flex",
+      "justify-content-between",
+      "align-items-center"
+    );
 
-    // nombre del plato
+    // Contenedor de info del plato
+    const infoDiv = document.createElement("DIV");
+
     const nombreEl = document.createElement("H4");
-    nombreEl.classList.add("my-4");
+    nombreEl.classList.add("my-0", "fs-5", "fw-bold");
     nombreEl.textContent = nombre;
 
-    // contenedor de cantidad
     const cantidadEl = document.createElement("P");
-    cantidadEl.classList.add("fw-bold");
-    cantidadEl.textContent = "Cantidad: ";
+    cantidadEl.classList.add("my-0");
+    cantidadEl.textContent = `Cantidad: ${cantidad}`;
 
-    const cantidadSpan = document.createElement("SPAN");
-    cantidadSpan.classList.add("fw-normal");
-    cantidadSpan.textContent = cantidad;
-
-    // contenedor de Precio
     const precioEl = document.createElement("P");
-    precioEl.classList.add("fw-bold");
-    precioEl.textContent = "Precio: ";
+    precioEl.classList.add("my-0");
+    precioEl.textContent = `Precio unitario: $${precio}`;
 
-    const precioSpan = document.createElement("SPAN");
-    precioSpan.classList.add("fw-normal");
-    precioSpan.textContent = `$${precio}`;
+    infoDiv.appendChild(nombreEl);
+    infoDiv.appendChild(cantidadEl);
+    infoDiv.appendChild(precioEl);
 
-    // contenedor de subtotal
+    // Subtotal del plato specific
     const subtotalEl = document.createElement("P");
-    subtotalEl.classList.add("fw-bold");
-    subtotalEl.textContent = "SubTotal: ";
+    subtotalEl.classList.add("fw-bold", "fs-5", "my-0", "mx-3");
+    subtotalEl.textContent = calcularSubtotal(precio, cantidad);
 
-    const subtotalSpan = document.createElement("SPAN");
-    subtotalSpan.classList.add("fw-normal");
-    subtotalSpan.textContent = calcularSubtotal(precio, cantidad);
-
-    // contenedor del boton eliminar
+    // Botón Eliminar (Icono de Basurero)
     const btnEliminar = document.createElement("BUTTON");
-    btnEliminar.classList.add("btn", "btn-danger");
-    btnEliminar.textContent = "Eliminar del pedido";
+    btnEliminar.classList.add("btn", "btn-danger", "p-2");
+    // Icono SVG
+    btnEliminar.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+        </svg>
+    `;
 
-    // funcion del boton eliminar
+    // Función del botón eliminar
     btnEliminar.onclick = function () {
       eliminarPedido(id);
     };
 
-    //agrega elemento a su contenedor
-    cantidadEl.appendChild(cantidadSpan);
-    precioEl.appendChild(precioSpan);
-    subtotalEl.appendChild(subtotalSpan);
-
-    //agrega elementos a la lista
-    lista.appendChild(nombreEl);
-    lista.appendChild(cantidadEl);
-    lista.appendChild(precioEl);
+    // Agregar elementos a la lista (flex container)
+    lista.appendChild(infoDiv);
     lista.appendChild(subtotalEl);
     lista.appendChild(btnEliminar);
 
-    //agrega la lista a un grupo de lista
+    // Agregar lista al grupo
     grupo.appendChild(lista);
   });
 
-  // agrega al resumen
+  // Agregar al resumen
   resumen.appendChild(heading);
-  resumen.appendChild(mesa);
-  resumen.appendChild(hora);
+  resumen.appendChild(mesaHora);
   resumen.appendChild(grupo);
 
   //agrega elemento a contenido
@@ -424,35 +412,54 @@ function mostrarTotal(subtotal, total, propina) {
 
   //subtotal
   const subtotalParrafo = document.createElement("P");
-  subtotalParrafo.classList.add("fs-4", "fw-bold", "mt-2");
+  subtotalParrafo.classList.add(
+    "fs-4",
+    "fw-bold",
+    "mt-2",
+    "d-flex",
+    "justify-content-between"
+  );
   subtotalParrafo.textContent = "Subtotal: ";
 
   const subtotalSpan = document.createElement("SPAN");
   subtotalSpan.classList.add("fw-normal");
   subtotalSpan.textContent = `$${subtotal}`;
-
   subtotalParrafo.appendChild(subtotalSpan);
 
   //propina
   const propinaParrafo = document.createElement("P");
-  propinaParrafo.classList.add("fs-4", "fw-bold", "mt-2");
+  propinaParrafo.classList.add(
+    "fs-4",
+    "fw-bold",
+    "mt-2",
+    "d-flex",
+    "justify-content-between"
+  );
   propinaParrafo.textContent = "Propina: ";
 
   const propinaSpan = document.createElement("SPAN");
   propinaSpan.classList.add("fw-normal");
   propinaSpan.textContent = `$${propina}`;
-
   propinaParrafo.appendChild(propinaSpan);
+
+  // Divisor
+  const divisor = document.createElement("HR");
 
   //total
   const totalParrafo = document.createElement("P");
-  totalParrafo.classList.add("fs-4", "fw-bold", "mt-2");
-  totalParrafo.textContent = "Total a pagar: ";
+  totalParrafo.classList.add(
+    "fs-3",
+    "fw-bold",
+    "mt-2",
+    "d-flex",
+    "justify-content-between",
+    "text-black"
+  );
+  totalParrafo.textContent = "Total Total: ";
 
   const totalSpan = document.createElement("SPAN");
-  totalSpan.classList.add("fw-normal");
+  totalSpan.classList.add("fw-bold");
   totalSpan.textContent = `$${total}`;
-
   totalParrafo.appendChild(totalSpan);
 
   //eliminar totales previos
@@ -463,6 +470,7 @@ function mostrarTotal(subtotal, total, propina) {
   //agregar al div contenedor
   divTotales.appendChild(subtotalParrafo);
   divTotales.appendChild(propinaParrafo);
+  divTotales.appendChild(divisor);
   divTotales.appendChild(totalParrafo);
 
   //agrega al formulario
