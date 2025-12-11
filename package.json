@@ -1,0 +1,11 @@
+{
+  "name": "restaurant-manager-javascript",
+  "version": "1.0.0",
+  "description": "Restaurant Manager App",
+  "scripts": {
+    "start": "serve ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
