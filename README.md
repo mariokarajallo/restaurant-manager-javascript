@@ -4,7 +4,7 @@ Aplicación web para la gestión de pedidos de restaurante. Permite a los mesero
 
 ## Demo
 
-Puedes ver el proyecto en funcionamiento aquí: [Restaurant App](https://mariokarajallo.github.io/restaurant-manager-javascript/)
+Puedes ver el proyecto en funcionamiento aquí: [Restaurant App](https://restaurant-manager-javascript.vercel.app/)
 
 ![Demo del proyecto](restaurant-app.gif)
 
